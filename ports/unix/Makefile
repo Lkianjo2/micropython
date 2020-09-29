@@ -105,7 +105,7 @@ endif
 LDFLAGS += $(LDFLAGS_MOD) $(LDFLAGS_ARCH) -lm $(LDFLAGS_EXTRA)
 
 # Flags to link with pthread library
-LIBPTHREAD = -lpthread
+#LIBPTHREAD = -lpthread
 
 ifeq ($(MICROPY_FORCE_32BIT),1)
 # Note: you may need to install i386 versions of dependency packages,
@@ -205,9 +205,12 @@ LIBFFI_CFLAGS_MOD := $(shell pkg-config --cflags libffi)
 LIBFFI_LDFLAGS_MOD := $(shell pkg-config --libs libffi)
 endif
 
-ifeq ($(UNAME_S),Linux)
-LIBFFI_LDFLAGS_MOD += -ldl
-endif
+#ifeq ($(UNAME_S),Linux)
+#LIBFFI_LDFLAGS_MOD += -ldl
+#endif
+
+LIBFFI_LDFLAGS_MOD = $(BUILD)/lib/libffi/.libs/libffi.a
+LIBFFI_LDFLAGS_MOD += -lsocket
 
 CFLAGS_MOD += $(LIBFFI_CFLAGS_MOD) -DMICROPY_PY_FFI=1
 LDFLAGS_MOD += $(LIBFFI_LDFLAGS_MOD)
