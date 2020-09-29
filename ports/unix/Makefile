@@ -36,6 +36,7 @@ GIT_SUBMODULES += lib/axtls lib/berkeley-db-1.xx lib/libffi
 INC +=  -I.
 INC +=  -I$(TOP)
 INC += -I$(BUILD)
+INC += -I$(BUILD)/lib/libffi/include
 
 # compiler settings
 CWARN = -Wall -Werror
