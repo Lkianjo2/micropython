@@ -258,6 +258,15 @@ STATIC mp_obj_t listdir_next(mp_obj_t self_in) {
     #ifdef _DIRENT_HAVE_D_TYPE
     #ifdef DTTOIF
     t->items[1] = MP_OBJ_NEW_SMALL_INT(DTTOIF(dirent->d_type));
+    #elif __QNX__
+    struct dirent_extra *dex = _DEXTRA_FIRST(dirent);
+    if (dex->d_type == S_IFDIR) {
+        t->items[1] = MP_OBJ_NEW_SMALL_INT(MP_S_IFDIR);
+    } else if (dex->d_type == S_IFREG) {
+        t->items[1] = MP_OBJ_NEW_SMALL_INT(MP_S_IFREG);
+    } else {
+        t->items[1] = MP_OBJ_NEW_SMALL_INT(dex->d_type);
+    }
     #else
     if (dirent->d_type == DT_DIR) {
         t->items[1] = MP_OBJ_NEW_SMALL_INT(MP_S_IFDIR);
