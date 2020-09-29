@@ -39,6 +39,10 @@
 #include <errno.h>
 #include <math.h>
 
+#if defined(__QNX__)
+#include <sys/time.h>
+#endif
+
 #include "py/objtuple.h"
 #include "py/objstr.h"
 #include "py/runtime.h"
